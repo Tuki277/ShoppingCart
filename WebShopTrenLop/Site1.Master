@@ -1,0 +1,82 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site1.master.cs" Inherits="WebShopTrenLop.Site1" %>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>
+        <asp:ContentPlaceHolder ID="tieude" runat="server"></asp:ContentPlaceHolder>
+    </title>
+    <link rel="stylesheet" href="Style.css"/>
+</head>
+<body>
+    <form id="form1" runat="server" action="WebForm6.aspx">
+    <div class="container">
+        <div class="header">
+            <h1>Trần Hoàng Huy - 2019602661</h1>
+            <ul class="nav">
+                <li><a href="#">Home</a></li>
+                <li><a href="#">About</a></li>
+                <li><a href="#">Porfolio</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+        </div>
+        <div class="content">
+            <div class="content-inner">
+                <asp:ContentPlaceHolder ID="noidung" runat="server"></asp:ContentPlaceHolder>
+            </div>
+        </div>
+        <div class="sidebar">
+            <div class="sidebar-inner">
+                <h2>About Me</h2>
+
+                <img class="img-resize" src="./Images/b11.jpg" />
+                <h2>Danh mục</h2>
+                <ul>
+                    <li>
+                        <a href="WebForm1.aspx">Danh sách sản phẩm</a>
+                    </li>
+
+                    <li>
+                        <a href="WebForm4.aspx">Thêm sản phẩm mới</a>
+                    </li>
+
+                    <asp:Repeater ID="Repeater1" runat="server" DataSourceID="SqlDataSource1">
+                        <ItemTemplate>
+                            <li>
+                               <a href='WebForm2.aspx?CategoryId=<%# Eval("Categoryid") %>'><%# Eval("CategoryName") %></a>
+                            </li>
+                        </ItemTemplate>
+                    </asp:Repeater>
+                     
+                    <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:ECartDB2ConnectionString %>" DeleteCommand="DELETE FROM [Category] WHERE [Categoryid] = @Categoryid" InsertCommand="INSERT INTO [Category] ([CategoryName], [MetaTitle]) VALUES (@CategoryName, @MetaTitle)" SelectCommand="SELECT * FROM [Category]" UpdateCommand="UPDATE [Category] SET [CategoryName] = @CategoryName, [MetaTitle] = @MetaTitle WHERE [Categoryid] = @Categoryid">
+                        <DeleteParameters>
+                            <asp:Parameter Name="Categoryid" Type="Int32" />
+                        </DeleteParameters>
+                        <InsertParameters>
+                            <asp:Parameter Name="CategoryName" Type="String" />
+                            <asp:Parameter Name="MetaTitle" Type="String" />
+                        </InsertParameters>
+                        <UpdateParameters>
+                            <asp:Parameter Name="CategoryName" Type="String" />
+                            <asp:Parameter Name="MetaTitle" Type="String" />
+                            <asp:Parameter Name="Categoryid" Type="Int32" />
+                        </UpdateParameters>
+                    </asp:SqlDataSource>
+                     
+                </ul>
+                <%--<h2>Lưu trữ</h2>
+                <ul>
+                    <li><a href="#">Nội dung 1</a></li>
+                    <li><a href="#">Nội dung 2</a></li>
+               
+                </ul>--%>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>&copy; Fictional Company</p>
+        </div>
+    </div>
+    </form>
+</body>
+</html>
